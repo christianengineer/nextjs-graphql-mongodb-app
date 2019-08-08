@@ -1,39 +1,8 @@
-const express = require('express');
-const graphqlHttp = require('express-graphql');
 const mongoose = require('mongoose');
-const graphqlSchema = require('./graphql/schema/index');
-const graphqlResolvers = require('./graphql/resolvers/index');
+const Todo = require('./models/todo')
 
-const PORT = process.env.PORT || 4000;
-
-const server = express();
-
-server.use(
-  '/api',
-  graphqlHttp({
-    schema: graphqlSchema,
-    rootValue: graphqlResolvers,
-    graphiql: true,
-  }),
+mongoose.connect(
+  `mongodb+srv://chris.ipanaque@gmail.com:THf8.MChcw-5sdX@graphql-cluster-omvn0.mongodb.net/test?retryWrites=true&w=majority`,
+  {useMongoClient: true},
 );
 
-server.get('/', (request, response, next) => {
-  response.send('Server running successfully');
-});
-
-mongoose
-  .connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${
-      process.env.MONGO_PASSWORD
-    }@graphql-cluster-omvn0.mongodb.net/${
-      process.env.MONGO_DB
-    }?retryWrites=true&w=majority`,
-  )
-  .then(() => {
-    server.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
