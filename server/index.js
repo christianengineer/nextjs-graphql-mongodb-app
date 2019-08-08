@@ -1,5 +1,10 @@
+const express = require('express');
 const mongoose = require('mongoose');
 const Todo = require('./models/todo');
+
+const server = express();
+
+server.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 
@@ -23,7 +28,7 @@ mongoose
 
 const addTodo = async () => {
   const todo = {
-    text: 'Do laundry',
+    text: 'Buy toilet paper',
     completed: false,
   };
 
