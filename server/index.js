@@ -22,7 +22,13 @@ server.get('/', (request, response, next) => {
 });
 
 mongoose
-  .connect(``)
+  .connect(
+    `mongodb+srv://${process.env.MONGO_USER}:${
+      process.env.MONGO_PASSWORD
+    }@graphql-cluster-omvn0.mongodb.net/${
+      process.env.MONGO_DB
+    }?retryWrites=true&w=majority`,
+  )
   .then(() => {
     server.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
