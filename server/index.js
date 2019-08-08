@@ -1,14 +1,25 @@
 const mongoose = require('mongoose');
 const Todo = require('./models/todo');
 
-mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_USER}:${
-    process.env.MONGO_PASSWORD
-  }@graphql-cluster-omvn0.mongodb.net/${
-    process.env.MONGO_DB
-  }?retryWrites=true&w=majority`,
-  {useNewUrlParser: true},
-);
+const PORT = process.env.PORT || 4000;
+
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.MONGO_USER}:${
+      process.env.MONGO_PASSWORD
+    }@graphql-cluster-omvn0.mongodb.net/${
+      process.env.MONGO_DB
+    }?retryWrites=true&w=majority`,
+    {useNewUrlParser: true},
+  )
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log(`Server running on port: ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const addTodo = async () => {
   const todo = {
