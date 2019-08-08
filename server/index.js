@@ -12,7 +12,7 @@ mongoose.connect(
 
 const addTodo = async () => {
   const todo = {
-    text: 'Roof',
+    text: 'Do laundry',
     completed: false,
   };
 
