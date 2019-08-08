@@ -2,11 +2,24 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Todo = require('./models/todo');
 
+const graphqlHttp = require('express-graphql');
+const graphqlSchema = require('./graphql/schema/index');
+const graphqlResolvers = require('./graphql/resolvers/index');
+
+const PORT = process.env.PORT || 4000;
+
 const server = express();
 
 server.use(express.json());
 
-const PORT = process.env.PORT || 4000;
+server.use(
+  '/api',
+  graphqlHttp({
+    schema: graphqlSchema,
+    rootValue: graphqlResolvers,
+    graphiql: true,
+  }),
+);
 
 mongoose
   .connect(
@@ -28,7 +41,7 @@ mongoose
 
 const addTodo = async () => {
   const todo = {
-    text: 'Buy toilet paper',
+    text: 'Clean fence',
     completed: false,
   };
 
@@ -48,5 +61,5 @@ const addTodo = async () => {
 //   console.log(response);
 // };
 
-addTodo();
+// addTodo();
 // updateTodo();
