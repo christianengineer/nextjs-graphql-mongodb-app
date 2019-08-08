@@ -16,3 +16,18 @@ server.use(
     graphiql: true,
   }),
 );
+
+server.get('/', (request, response, next) => {
+  response.send('Server running successfully');
+});
+
+mongoose
+  .connect(``)
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
