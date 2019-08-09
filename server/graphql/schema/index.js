@@ -18,6 +18,7 @@ module.exports = graphql.buildSchema(`
 
   type RootMutation {
     addTodo(todoInput: TodoInput): Todo
+    completeTodo(todoId: ID!, completed: Boolean): Todo
   }
 
   schema {
