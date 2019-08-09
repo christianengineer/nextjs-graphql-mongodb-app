@@ -41,4 +41,12 @@ module.exports = {
       console.log(error);
     }
   },
+  deleteTodo: async (args, request) => {
+    try {
+      const result = await Todo.deleteOne({_id: args.todoId});
+      return result.deletedCount;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
