@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
+import {useQuery, useMutation} from '@apollo/react-hooks';
+
+import {gql} from 'apollo-boost';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 
-import {gql} from 'apollo-boost';
-import {useQuery, useMutation} from '@apollo/react-hooks';
 
 const GET_TODOS = gql`
   {
@@ -50,6 +52,10 @@ const DELETE_TODO = gql`
 `;
 
 export default function TodoList() {
+  const [inputs, setInputs] = useState({
+    text: '',
+  });
+
   const {loading, error, data} = useQuery(GET_TODOS);
 
   const [addTodo] = useMutation(ADD_TODO, {
@@ -84,10 +90,6 @@ export default function TodoList() {
     },
   });
 
-  const [inputs, setInputs] = useState({
-    text: '',
-  });
-
   const handleInputs = (event) => {
     event.persist();
     setInputs((inputs) => ({
@@ -103,7 +105,7 @@ export default function TodoList() {
     }));
   };
 
-  const handleToggle = (_id, completedArg) => () => {
+  const handleCompleteTodo = (_id, completedArg) => () => {
     completeTodo({variables: {todoId: _id, completed: !completedArg}});
   };
 
@@ -112,7 +114,7 @@ export default function TodoList() {
   };
 
   if (loading) return <div>Loading...</div>;
-  
+
   if (error) return <div>Error!</div>;
 
   return (
@@ -139,7 +141,7 @@ export default function TodoList() {
               role={undefined}
               button
               divider
-              onClick={handleToggle(_id, completed)}
+              onClick={handleCompleteTodo(_id, completed)}
             >
               <ListItemIcon>
                 <Checkbox checked={completed} />
