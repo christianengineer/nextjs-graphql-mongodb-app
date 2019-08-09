@@ -1,14 +1,30 @@
 import React from 'react';
 import './App.css';
-import {ApolloProvider} from '@apollo/react-hooks';
+import {gql} from 'apollo-boost';
+import {useQuery} from '@apollo/react-hooks';
 
 function App() {
+  const {loading, error, data} = useQuery(gql`
+    {
+      todos {
+        _id
+        text
+        completed
+      }
+    }
+  `);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: :(</p>;
+
   return (
-    <ApolloProvider client={client}>
       <div className='App'>
-        <div>TODO LIST</div>
+        <div>
+          {data.todos.map(({_id, text, completed}) => (
+            <div key={_id}>{text}</div>
+          ))}
+        </div>
       </div>
-    </ApolloProvider>
   );
 }
 
