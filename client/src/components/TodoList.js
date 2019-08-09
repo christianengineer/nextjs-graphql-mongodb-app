@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -13,13 +12,6 @@ import Button from '@material-ui/core/Button';
 
 import {gql} from 'apollo-boost';
 import {useQuery, useMutation} from '@apollo/react-hooks';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 const GET_TODOS = gql`
   {
@@ -58,8 +50,8 @@ const DELETE_TODO = gql`
 `;
 
 export default function TodoList() {
-  const classes = useStyles();
   const {loading, error, data} = useQuery(GET_TODOS);
+
   const [addTodo] = useMutation(ADD_TODO, {
     update(
       cache,
@@ -74,7 +66,9 @@ export default function TodoList() {
       });
     },
   });
+
   const [completeTodo] = useMutation(UPDATE_TODO);
+
   const [deleteTodo] = useMutation(DELETE_TODO, {
     update(
       cache,
@@ -89,6 +83,7 @@ export default function TodoList() {
       });
     },
   });
+
   const [inputs, setInputs] = useState({
     text: '',
   });
@@ -113,12 +108,12 @@ export default function TodoList() {
   };
 
   const handleDeleteTodo = (_id) => () => {
-    console.log('deleted');
     deleteTodo({variables: {todoId: _id}});
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: :(</p>;
+  if (loading) return <div>Loading...</div>;
+  
+  if (error) return <div>Error!</div>;
 
   return (
     <div>
@@ -136,14 +131,14 @@ export default function TodoList() {
           Submit
         </Button>
       </form>
-      <List className={classes.root}>
+      <List>
         {data.todos.map(({_id, text, completed}) => {
           return (
             <ListItem
               key={_id}
               role={undefined}
-              dense
               button
+              divider
               onClick={handleToggle(_id, completed)}
             >
               <ListItemIcon>
