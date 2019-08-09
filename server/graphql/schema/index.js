@@ -11,10 +11,15 @@ module.exports = graphql.buildSchema(`
     todos: [Todo!]!
   }
 
+  type SuccessfulDeletion {
+    acknowledged: Boolean
+    deletedCount: Int
+  }
+
   type RootMutation {
     addTodo(text: String): Todo
     completeTodo(todoId: ID!, completed: Boolean): Todo
-    deleteTodo(todoId: ID!): Int!
+    deleteTodo(todoId: ID!): SuccessfulDeletion
   }
 
   schema {

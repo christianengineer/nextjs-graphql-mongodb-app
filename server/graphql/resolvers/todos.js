@@ -44,7 +44,7 @@ module.exports = {
   deleteTodo: async (args, request) => {
     try {
       const result = await Todo.deleteOne({_id: args.todoId});
-      return result.deletedCount;
+      return result;
     } catch (error) {
       console.log(error);
     }
