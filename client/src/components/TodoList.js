@@ -53,17 +53,13 @@ const UPDATE_TODO = gql`
 
 const DELETE_TODO = gql`
   mutation DeleteTodo($todoId: ID!) {
-    deleteTodo(todoId: $todoId) {
-      deletedCount
-    }
+    deleteTodo(todoId: $todoId)
   }
 `;
 
 export default function TodoList() {
   const classes = useStyles();
-  const {loading, error, data, refetch, networkStatus} = useQuery(GET_TODOS, {
-    notifyOnNetworkStatusChange: true,
-  });
+  const {loading, error, data} = useQuery(GET_TODOS);
   const [addTodo] = useMutation(ADD_TODO, {
     update(
       cache,
@@ -79,7 +75,20 @@ export default function TodoList() {
     },
   });
   const [completeTodo] = useMutation(UPDATE_TODO);
-  const [deleteTodo] = useMutation(DELETE_TODO);
+  const [deleteTodo] = useMutation(DELETE_TODO, {
+    update(
+      cache,
+      {
+        data: {deleteTodo},
+      },
+    ) {
+      const {todos} = cache.readQuery({query: GET_TODOS});
+      cache.writeQuery({
+        query: GET_TODOS,
+        data: {todos: todos.filter((todo) => todo._id !== deleteTodo)},
+      });
+    },
+  });
   const [inputs, setInputs] = useState({
     text: '',
   });
@@ -92,13 +101,11 @@ export default function TodoList() {
   };
 
   const handleAddTodo = (event) => {
-    console.log('addtodo');
     event.preventDefault();
     addTodo({variables: {text: inputs.text}});
     setInputs((inputs) => ({
       text: '',
     }));
-    console.log('added');
   };
 
   const handleToggle = (_id, completedArg) => () => {
@@ -108,10 +115,8 @@ export default function TodoList() {
   const handleDeleteTodo = (_id) => () => {
     console.log('deleted');
     deleteTodo({variables: {todoId: _id}});
-    refetch();
   };
 
-  if (networkStatus === 4) return <p>Refetching...</p>;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: :(</p>;
 
