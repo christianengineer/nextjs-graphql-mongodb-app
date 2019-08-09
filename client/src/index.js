@@ -4,6 +4,25 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import ApolloClient from 'apollo-boost';
+import {gql} from 'apollo-boost';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/api/',
+});
+
+client
+  .query({
+    query: gql`
+      {
+        todos {
+          _id
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

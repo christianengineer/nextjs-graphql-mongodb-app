@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Todo = require('./models/todo');
+const cors = require('cors');
 
 const graphqlHttp = require('express-graphql');
 const graphqlSchema = require('./graphql/schema/index');
@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 4000;
 const server = express();
 
 server.use(express.json());
+server.use(cors());
 
 server.use(
   '/api',
