@@ -12,7 +12,6 @@ import {useQuery, useMutation} from '@apollo/react-hooks';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -52,7 +51,6 @@ export default function TodoList() {
   return (
     <List className={classes.root}>
       {data.todos.map(({_id, text, completed}) => {
-        const labelId = `checkbox-list-label-${_id}`;
         return (
           <ListItem
             key={_id}
@@ -61,16 +59,10 @@ export default function TodoList() {
             button
             onClick={handleToggle(_id, completed)}
           >
-            <ListItemIcon>
-              <Checkbox
-                edge='start'
-                checked={completed}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{'aria-labelledby': labelId}}
-              />
-            </ListItemIcon>
             <ListItemText id={_id} primary={text} />
+            <ListItemIcon>
+              <Checkbox checked={completed} />
+            </ListItemIcon>
           </ListItem>
         );
       })}
