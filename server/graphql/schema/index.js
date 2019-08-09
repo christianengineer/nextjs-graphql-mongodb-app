@@ -9,7 +9,7 @@ module.exports = graphql.buildSchema(`
 
   input TodoInput {
     text: String!
-    completed: Boolean!
+    completed: Boolean
   }
 
   type RootQuery {
