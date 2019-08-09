@@ -7,17 +7,12 @@ module.exports = graphql.buildSchema(`
     completed: Boolean!
   }
 
-  input TodoInput {
-    text: String!
-    completed: Boolean
-  }
-
   type RootQuery {
     todos: [Todo!]!
   }
 
   type RootMutation {
-    addTodo(todoInput: TodoInput): Todo
+    addTodo(text: String): Todo
     completeTodo(todoId: ID!, completed: Boolean): Todo
   }
 

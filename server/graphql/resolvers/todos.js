@@ -11,7 +11,7 @@ module.exports = {
   },
   addTodo: async (args, request) => {
     const todo = new Todo({
-      text: args.todoInput.text,
+      text: args.text,
       completed: false,
     });
 
