@@ -5,6 +5,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -111,10 +114,15 @@ export default function TodoList() {
               button
               onClick={handleToggle(_id, completed)}
             >
-              <ListItemText id={_id} primary={text} />
               <ListItemIcon>
                 <Checkbox checked={completed} />
               </ListItemIcon>
+              <ListItemText id={_id} primary={text} />
+              <ListItemSecondaryAction>
+                <IconButton edge='end'>
+                  <DeleteForeverRoundedIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
           );
         })}
