@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
+import {ApolloProvider} from '@apollo/react-hooks';
 
 function App() {
   return (
-    <div className="App">
-      <div>
-
+    <ApolloProvider client={client}>
+      <div className='App'>
+        <div>TODO LIST</div>
       </div>
-    </div>
+    </ApolloProvider>
   );
 }
 
