@@ -31,9 +31,9 @@ export default function TodoList() {
   const classes = useStyles();
   const [completeTodo] = useMutation(UPDATE_TODO);
 
-  const handleToggle = (_id) => () => {
+  const handleToggle = (_id, completedArg) => () => {
     console.log(_id);
-    completeTodo({variables: {todoId: _id, completed: true}});
+    completeTodo({variables: {todoId: _id, completed: !completedArg}});
   };
 
   const {loading, error, data} = useQuery(gql`
@@ -59,7 +59,7 @@ export default function TodoList() {
             role={undefined}
             dense
             button
-            onClick={handleToggle(_id)}
+            onClick={handleToggle(_id, completed)}
           >
             <ListItemIcon>
               <Checkbox
