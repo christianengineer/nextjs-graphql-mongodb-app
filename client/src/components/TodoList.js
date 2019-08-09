@@ -53,6 +53,7 @@ export default function TodoList() {
     setInputs((inputs) => ({
       text: '',
     }));
+    refetch();
   };
 
   const handleToggle = (_id, completedArg) => () => {
@@ -66,7 +67,7 @@ export default function TodoList() {
     }));
   };
 
-  const {loading, error, data} = useQuery(gql`
+  const {loading, error, data, refetch} = useQuery(gql`
     {
       todos {
         _id
