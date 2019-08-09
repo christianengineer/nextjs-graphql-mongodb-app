@@ -41,13 +41,29 @@ const UPDATE_TODO = gql`
   }
 `;
 
+const DELETE_TODO = gql`
+  mutation DeleteTodo($todoId: ID!) {
+    deleteTodo(todoId: $todoId) {
+      deletedCount
+    }
+  }
+`;
+
 export default function TodoList() {
   const classes = useStyles();
   const [addTodo] = useMutation(ADD_TODO);
   const [completeTodo] = useMutation(UPDATE_TODO);
+  const [deleteTodo] = useMutation(DELETE_TODO);
   const [inputs, setInputs] = useState({
     text: '',
   });
+
+  const handleInputs = (event) => {
+    event.persist();
+    setInputs((inputs) => ({
+      [event.target.id]: event.target.value,
+    }));
+  };
 
   const handleAddTodo = (event) => {
     console.log('addtodo');
@@ -63,11 +79,10 @@ export default function TodoList() {
     completeTodo({variables: {todoId: _id, completed: !completedArg}});
   };
 
-  const handleInputs = (event) => {
-    event.persist();
-    setInputs((inputs) => ({
-      [event.target.id]: event.target.value,
-    }));
+  const handleDeleteTodo = (_id) => () => {
+    console.log('deleted');
+    deleteTodo({variables: {todoId: _id}});
+    refetch();
   };
 
   const {loading, error, data, refetch} = useQuery(gql`
@@ -120,7 +135,7 @@ export default function TodoList() {
               <ListItemText id={_id} primary={text} />
               <ListItemSecondaryAction>
                 <IconButton edge='end'>
-                  <DeleteForeverRoundedIcon />
+                  <DeleteForeverRoundedIcon onClick={handleDeleteTodo(_id)} />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
