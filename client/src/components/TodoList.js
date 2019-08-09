@@ -21,6 +21,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const GET_TODOS = gql`
+  {
+    todos {
+      _id
+      text
+      completed
+    }
+  }
+`;
+
 const ADD_TODO = gql`
   mutation AddTodo($text: String!) {
     addTodo(text: $text) {
@@ -51,7 +61,23 @@ const DELETE_TODO = gql`
 
 export default function TodoList() {
   const classes = useStyles();
-  const [addTodo] = useMutation(ADD_TODO);
+  const {loading, error, data, refetch, networkStatus} = useQuery(GET_TODOS, {
+    notifyOnNetworkStatusChange: true,
+  });
+  const [addTodo] = useMutation(ADD_TODO, {
+    update(
+      cache,
+      {
+        data: {addTodo},
+      },
+    ) {
+      const {todos} = cache.readQuery({query: GET_TODOS});
+      cache.writeQuery({
+        query: GET_TODOS,
+        data: {todos: todos.concat([addTodo])},
+      });
+    },
+  });
   const [completeTodo] = useMutation(UPDATE_TODO);
   const [deleteTodo] = useMutation(DELETE_TODO);
   const [inputs, setInputs] = useState({
@@ -72,7 +98,7 @@ export default function TodoList() {
     setInputs((inputs) => ({
       text: '',
     }));
-    refetch();
+    console.log('added');
   };
 
   const handleToggle = (_id, completedArg) => () => {
@@ -85,16 +111,7 @@ export default function TodoList() {
     refetch();
   };
 
-  const {loading, error, data, refetch} = useQuery(gql`
-    {
-      todos {
-        _id
-        text
-        completed
-      }
-    }
-  `);
-
+  if (networkStatus === 4) return <p>Refetching...</p>;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: :(</p>;
 
@@ -110,12 +127,7 @@ export default function TodoList() {
           variant='outlined'
           onChange={handleInputs}
         />
-        <Button
-          variant='contained'
-          color='primary'
-          fullWidth
-          onClick={handleAddTodo}
-        >
+        <Button type='submit' variant='contained' color='primary' fullWidth>
           Submit
         </Button>
       </form>
@@ -133,9 +145,9 @@ export default function TodoList() {
                 <Checkbox checked={completed} />
               </ListItemIcon>
               <ListItemText id={_id} primary={text} />
-              <ListItemSecondaryAction>
+              <ListItemSecondaryAction onClick={handleDeleteTodo(_id)}>
                 <IconButton edge='end'>
-                  <DeleteForeverRoundedIcon onClick={handleDeleteTodo(_id)} />
+                  <DeleteForeverRoundedIcon />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
