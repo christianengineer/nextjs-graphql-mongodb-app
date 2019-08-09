@@ -14,7 +14,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 
-
 const GET_TODOS = gql`
   {
     todos {
@@ -35,7 +34,7 @@ const ADD_TODO = gql`
   }
 `;
 
-const UPDATE_TODO = gql`
+const COMPLETE_TODO = gql`
   mutation CompleteTodo($todoId: ID!, $completed: Boolean!) {
     completeTodo(todoId: $todoId, completed: $completed) {
       _id
@@ -73,7 +72,7 @@ export default function TodoList() {
     },
   });
 
-  const [completeTodo] = useMutation(UPDATE_TODO);
+  const [completeTodo] = useMutation(COMPLETE_TODO);
 
   const [deleteTodo] = useMutation(DELETE_TODO, {
     update(
