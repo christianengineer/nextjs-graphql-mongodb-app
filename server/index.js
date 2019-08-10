@@ -29,7 +29,7 @@ mongoose
     }@graphql-cluster-omvn0.mongodb.net/${
       process.env.MONGO_DB
     }?retryWrites=true&w=majority`,
-    {useNewUrlParser: true},
+    {useNewUrlParser: true, useFindAndModify: false},
   )
   .then(() => {
     server.listen(PORT, () => {
