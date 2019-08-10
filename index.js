@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const graphqlHttp = require('express-graphql');
 const graphqlSchema = require('./graphql/schema/index');
@@ -12,6 +13,12 @@ const server = express();
 
 server.use(express.json());
 server.use(cors());
+
+server.use(express.static(path.join(__dirname, 'client/build')));
+
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 server.use(
   '/api',
