@@ -14,6 +14,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 const GET_TODOS = gql`
   {
     todos {
@@ -51,6 +55,18 @@ const DELETE_TODO = gql`
 `;
 
 export default function TodoList() {
+  const [open, setOpen] = useState(false);
+  const [todoToBeDeleted, setTodoToBeDeleted] = useState('');
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+    setTodoToBeDeleted('');
+  }
+
   const [inputs, setInputs] = useState({
     text: '',
   });
@@ -108,8 +124,9 @@ export default function TodoList() {
     completeTodo({variables: {todoId: _id, completed: !completedArg}});
   };
 
-  const handleDeleteTodo = (_id) => () => {
-    deleteTodo({variables: {todoId: _id}});
+  const handleDeleteTodo = () => {
+    deleteTodo({variables: {todoId: todoToBeDeleted}});
+    setOpen(false);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -118,6 +135,23 @@ export default function TodoList() {
 
   return (
     <div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='alert-dialog-title'
+      >
+        <DialogTitle id='alert-dialog-title'>
+          {'Are you sure you want to DELETE this todo?'}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} color='primary'>
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteTodo} color='secondary' autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
       <form onSubmit={handleAddTodo}>
         <TextField
           id='text'
@@ -151,8 +185,17 @@ export default function TodoList() {
               <ListItemIcon>
                 <Checkbox checked={completed} />
               </ListItemIcon>
-              <ListItemText id={_id} primary={text} />
-              <ListItemSecondaryAction onClick={handleDeleteTodo(_id)}>
+              <ListItemText
+                id={_id}
+                primary={text}
+                style={{textDecoration: completed ? 'line-through' : 'none'}}
+              />
+              <ListItemSecondaryAction
+                onClick={() => {
+                  setTodoToBeDeleted(_id);
+                  handleClickOpen();
+                }}
+              >
                 <IconButton edge='end'>
                   <DeleteForeverRoundedIcon />
                 </IconButton>
