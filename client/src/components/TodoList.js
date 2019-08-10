@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useQuery, useMutation} from '@apollo/react-hooks';
-
 import {gql} from 'apollo-boost';
 
 import TextField from '@material-ui/core/TextField';
@@ -56,16 +55,8 @@ const DELETE_TODO = gql`
 
 export default function TodoList() {
   const [open, setOpen] = useState(false);
+
   const [todoToBeDeleted, setTodoToBeDeleted] = useState('');
-
-  function handleClickOpen() {
-    setOpen(true);
-  }
-
-  function handleClose() {
-    setOpen(false);
-    setTodoToBeDeleted('');
-  }
 
   const [inputs, setInputs] = useState({
     text: '',
@@ -104,6 +95,15 @@ export default function TodoList() {
       });
     },
   });
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+    setTodoToBeDeleted('');
+  }
 
   const handleInputs = (event) => {
     event.persist();
