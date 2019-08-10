@@ -16,10 +16,6 @@ server.use(cors());
 
 server.use(express.static(path.join(__dirname, 'client/build')));
 
-server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
-
 server.use(
   '/api',
   graphqlHttp({
@@ -28,6 +24,10 @@ server.use(
     graphiql: true,
   }),
 );
+
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 mongoose
   .connect(
