@@ -133,7 +133,7 @@ export default function TodoList() {
           variant='contained'
           color='primary'
           fullWidth
-          // disabled={inputs.text ? false : true}
+          disabled={inputs.text ? false : true}
         >
           Submit
         </Button>
