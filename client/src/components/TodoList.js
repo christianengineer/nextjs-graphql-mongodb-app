@@ -128,7 +128,13 @@ export default function TodoList() {
           variant='outlined'
           onChange={handleInputs}
         />
-        <Button type='submit' variant='contained' color='primary' fullWidth>
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          fullWidth
+          // disabled={inputs.text ? false : true}
+        >
           Submit
         </Button>
       </form>
