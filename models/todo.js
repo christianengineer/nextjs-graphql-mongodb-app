@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const todoSchema = mongoose.Schema({
   text: {type: String, required: true},
   completed: {type: Boolean, required: true},
-  date: {type: Number, required: true}
+  created: {type: Date, required: true, default: Date.now}
 });
 
 module.exports = mongoose.model('Todo', todoSchema);

@@ -5,7 +5,7 @@ module.exports = graphql.buildSchema(`
     _id: ID!
     text: String!
     completed: Boolean!
-    date: Int!
+    created: String!
   }
 
   type RootQuery {

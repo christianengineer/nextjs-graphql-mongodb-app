@@ -25,7 +25,6 @@ const GET_TODOS = gql`
       _id
       text
       completed
-      date
     }
   }
 `;
@@ -36,7 +35,6 @@ const ADD_TODO = gql`
       _id
       text
       completed
-      date
     }
   }
 `;
