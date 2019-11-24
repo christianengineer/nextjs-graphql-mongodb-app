@@ -3,7 +3,7 @@ const Todo = require('../../models/todo');
 const rootResolver = {
   todos: async () => {
     try {
-      const todos = await Todo.find().sort({created:-1});
+      const todos = await Todo.find().sort({updated:-1});
       return todos;
     } catch (err) {
       throw err;
@@ -29,6 +29,7 @@ const rootResolver = {
         {
           $set: {
             completed: args.completed,
+            updated: new Date()
           },
         },
         {

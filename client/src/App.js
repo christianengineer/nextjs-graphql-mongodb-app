@@ -82,7 +82,22 @@ export default function App() {
     },
   });
 
-  const [completeTodo] = useMutation(COMPLETE_TODO);
+  const [completeTodo] = useMutation(COMPLETE_TODO, {
+    update(
+      cache,
+      {
+        data: {completeTodo},
+      },
+    ) {
+      const {todos} = cache.readQuery({query: GET_TODOS});
+      const newTodos = todos.filter((todo) => todo._id !== completeTodo._id)
+      newTodos.unshift(completeTodo)
+      cache.writeQuery({
+        query: GET_TODOS,
+        data: {todos: newTodos},
+      });
+    },
+  });
 
   const [deleteTodo] = useMutation(DELETE_TODO, {
     update(
