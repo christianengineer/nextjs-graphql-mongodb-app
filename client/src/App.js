@@ -67,14 +67,9 @@ export default function App() {
   const {loading, error, data} = useQuery(GET_TODOS);
 
   const [addTodo] = useMutation(ADD_TODO, {
-    update(
-      cache,
-      {
-        data: {addTodo},
-      },
-    ) {
+    update(cache, {data: {addTodo}}) {
       const {todos} = cache.readQuery({query: GET_TODOS});
-      todos.unshift(addTodo)
+      todos.unshift(addTodo);
       cache.writeQuery({
         query: GET_TODOS,
         data: {todos: todos},
@@ -83,15 +78,10 @@ export default function App() {
   });
 
   const [completeTodo] = useMutation(COMPLETE_TODO, {
-    update(
-      cache,
-      {
-        data: {completeTodo},
-      },
-    ) {
+    update(cache, {data: {completeTodo}}) {
       const {todos} = cache.readQuery({query: GET_TODOS});
-      const newTodos = todos.filter((todo) => todo._id !== completeTodo._id)
-      newTodos.unshift(completeTodo)
+      const newTodos = todos.filter((todo) => todo._id !== completeTodo._id);
+      newTodos.unshift(completeTodo);
       cache.writeQuery({
         query: GET_TODOS,
         data: {todos: newTodos},
@@ -100,12 +90,7 @@ export default function App() {
   });
 
   const [deleteTodo] = useMutation(DELETE_TODO, {
-    update(
-      cache,
-      {
-        data: {deleteTodo},
-      },
-    ) {
+    update(cache, {data: {deleteTodo}}) {
       const {todos} = cache.readQuery({query: GET_TODOS});
       cache.writeQuery({
         query: GET_TODOS,
