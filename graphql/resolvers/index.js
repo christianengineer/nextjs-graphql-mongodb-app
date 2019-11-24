@@ -13,6 +13,7 @@ const rootResolver = {
     const todo = new Todo({
       text: args.text,
       completed: false,
+      date: new Date(new Date().getTime())
     });
 
     try {
@@ -29,6 +30,7 @@ const rootResolver = {
         {
           $set: {
             completed: args.completed,
+            date: new Date(new Date().getTime())
           },
         },
         {
