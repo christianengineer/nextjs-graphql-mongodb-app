@@ -25,6 +25,7 @@ const GET_TODOS = gql`
       _id
       text
       completed
+      date
     }
   }
 `;
@@ -35,6 +36,7 @@ const ADD_TODO = gql`
       _id
       text
       completed
+      date
     }
   }
 `;
@@ -74,9 +76,10 @@ export default function App() {
       },
     ) {
       const {todos} = cache.readQuery({query: GET_TODOS});
+      todos.unshift(addTodo)
       cache.writeQuery({
         query: GET_TODOS,
-        data: {todos: todos.concat([addTodo])},
+        data: {todos: todos},
       });
     },
   });
