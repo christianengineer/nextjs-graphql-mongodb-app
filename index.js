@@ -1,4 +1,4 @@
-require('dotenv').config({silent: process.env.NODE_ENV === 'production'});
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -32,11 +32,7 @@ server.get('*', (req, res) => {
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${
-      process.env.MONGO_PASSWORD
-    }@graphql-cluster-omvn0.mongodb.net/${
-      process.env.MONGO_DB
-    }?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@graphql-cluster-omvn0.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
     {useNewUrlParser: true, useFindAndModify: false},
   )
   .then(() => {
