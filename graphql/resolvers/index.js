@@ -3,7 +3,7 @@ const Todo = require('../../models/todo');
 const rootResolver = {
   todos: async () => {
     try {
-      const todos = await Todo.find().sort({updated:-1});
+      const todos = await Todo.find().sort({created:-1});
       return todos;
     } catch (err) {
       throw err;
