@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "readme": "graphql-markdown ./graphql/schema/index.js > README.md"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
+    "graphql-markdown": "^5.2.0",
     "nodemon": "^1.19.1"
   }
 }
