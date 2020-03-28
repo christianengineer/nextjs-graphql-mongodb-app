@@ -1,4 +1,15 @@
-## Todo List App using GraphQL, Apollo Client, Mongoose and MongoDB.
+## Todo List App
+
+### Front End
+- React
+- Apollo Client
+
+### Backend
+- Node
+- GraphQL
+- Express
+- Mongoose
+- MongoDB
 
 Live Demo: https://graphql-mongodb-todo-list.herokuapp.com/
 
