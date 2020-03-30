@@ -11,8 +11,8 @@ const rootResolver = {
   },
   addTodo: async (args, request) => {
     const todo = new Todo({
-      text: args.text,
-      completed: false,
+      task: args.task,
+      isCompleted: false,
     });
 
     try {
@@ -28,7 +28,7 @@ const rootResolver = {
         {_id: args.todoId},
         {
           $set: {
-            completed: args.completed,
+            isCompleted: args.isCompleted,
             updated: new Date()
           },
         },

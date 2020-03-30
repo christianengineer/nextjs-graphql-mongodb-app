@@ -3,8 +3,8 @@ const graphql = require('graphql');
 module.exports = graphql.buildSchema(`
   type Todo {
     _id: ID!
-    text: String!
-    completed: Boolean!
+    task: String!
+    isCompleted: Boolean!
     created: String!
     updated: String!
   }
@@ -14,8 +14,8 @@ module.exports = graphql.buildSchema(`
   }
 
   type RootMutation {
-    addTodo(text: String!): Todo
-    completeTodo(todoId: ID!, completed: Boolean): Todo
+    addTodo(task: String!): Todo
+    completeTodo(todoId: ID!, isCompleted: Boolean): Todo
     deleteTodo(todoId: ID!): String
   }
 
