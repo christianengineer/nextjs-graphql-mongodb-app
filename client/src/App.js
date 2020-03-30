@@ -23,28 +23,28 @@ const GET_TODOS = gql`
   {
     todos {
       _id
-      text
-      completed
+      task
+      isCompleted
     }
   }
 `;
 
 const ADD_TODO = gql`
-  mutation AddTodo($text: String!) {
-    addTodo(text: $text) {
+  mutation AddTodo($task: String!) {
+    addTodo(task: $task) {
       _id
-      text
-      completed
+      task
+      isCompleted
     }
   }
 `;
 
 const COMPLETE_TODO = gql`
-  mutation CompleteTodo($todoId: ID!, $completed: Boolean!) {
-    completeTodo(todoId: $todoId, completed: $completed) {
+  mutation CompleteTodo($todoId: ID!, $isCompleted: Boolean!) {
+    completeTodo(todoId: $todoId, isCompleted: $isCompleted) {
       _id
-      text
-      completed
+      task
+      isCompleted
     }
   }
 `;
@@ -61,7 +61,7 @@ export default function App() {
   const [todoToBeDeleted, setTodoToBeDeleted] = useState('');
 
   const [inputs, setInputs] = useState({
-    text: '',
+    task: '',
   });
 
   const {loading, error, data} = useQuery(GET_TODOS);
@@ -107,14 +107,14 @@ export default function App() {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
-    addTodo({variables: {text: inputs.text}});
+    addTodo({variables: {task: inputs.task}});
     setInputs((inputs) => ({
-      text: '',
+      task: '',
     }));
   };
 
   const handleCompleteTodo = (_id, completedArg) => () => {
-    completeTodo({variables: {todoId: _id, completed: !completedArg}});
+    completeTodo({variables: {todoId: _id, isCompleted: !completedArg}});
   };
 
   const handleDeleteTodo = () => {
@@ -152,8 +152,8 @@ export default function App() {
 
       <form onSubmit={handleAddTodo}>
         <TextField
-          id='text'
-          value={inputs.text}
+          id='task'
+          value={inputs.task}
           label='+ Add todo'
           margin='normal'
           fullWidth
@@ -165,29 +165,29 @@ export default function App() {
           variant='contained'
           color='primary'
           fullWidth
-          disabled={inputs.text ? false : true}
+          disabled={inputs.task ? false : true}
         >
           Submit
         </Button>
       </form>
 
       <List>
-        {data.todos.map(({_id, text, completed}) => {
+        {data.todos.map(({_id, task, isCompleted}) => {
           return (
             <ListItem
               key={_id}
               role={undefined}
               button
               divider
-              onClick={handleCompleteTodo(_id, completed)}
+              onClick={handleCompleteTodo(_id, isCompleted)}
             >
               <ListItemIcon>
-                <Checkbox checked={completed} />
+                <Checkbox checked={isCompleted} />
               </ListItemIcon>
               <ListItemText
                 id={_id}
-                primary={text}
-                style={{textDecoration: completed ? 'line-through' : 'none'}}
+                primary={task}
+                style={{textDecoration: isCompleted ? 'line-through' : 'none'}}
               />
               <ListItemSecondaryAction
                 onClick={() => {
