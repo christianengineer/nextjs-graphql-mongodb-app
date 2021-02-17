@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import dbConnect from '../api/dbConnect';
-import Todo from '../api/models/Todo';
+import dbConnect from '../what/dbConnect';
+import Todo from '../what/models/Todo';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +18,7 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { addTodo, completeTodo, deleteTodo } from '../api';
+import { addTodo, completeTodo, deleteTodo } from '../what';
 
 export default function TodoApp({ todos }) {
   const [inputs, setInputs] = useState({
