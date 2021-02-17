@@ -18,7 +18,29 @@ export async function addTodo(todo) {
       throw new Error(res.status);
     }
   } catch (error) {
-    throw new Error('server error');
+    throw new Error(error);
+  }
+}
+
+export async function completeTodo(_id, status) {
+  try {
+    const res = await fetch('/api', {
+      method: 'PUT',
+      headers: {
+        Accept: contentType,
+        'Content-Type': contentType,
+      },
+      body: JSON.stringify({
+        _id,
+        isCompleted: status,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error(res.status);
+    }
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
@@ -39,6 +61,6 @@ export async function deleteTodo(_id) {
       throw new Error(res.status);
     }
   } catch (error) {
-    throw new Error('server error');
+    throw new Error(error);
   }
 }

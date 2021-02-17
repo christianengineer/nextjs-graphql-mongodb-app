@@ -15,6 +15,26 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false });
       }
       break;
+    case 'PUT':
+      try {
+        const todo = await Todo.findByIdAndUpdate(
+          req.body._id,
+          {
+            isCompleted: req.body.isCompleted,
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        if (!todo) {
+          return res.status(400).json({ success: false });
+        }
+        res.status(201).json({ success: true, data: todo });
+      } catch (error) {
+        res.status(400).json({ success: false });
+      }
+      break;
     case 'DELETE':
       try {
         const todo = await Todo.deleteOne({ _id: req.body._id });

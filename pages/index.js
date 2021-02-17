@@ -18,7 +18,7 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { addTodo, deleteTodo } from '../api';
+import { addTodo, completeTodo, deleteTodo } from '../api';
 
 export default function TodoApp({ todos }) {
   const [inputs, setInputs] = useState({
@@ -38,6 +38,10 @@ export default function TodoApp({ todos }) {
     setInputs(() => ({
       task: '',
     }));
+  };
+
+  const handleCompleteTodo = async (_id, status) => {
+    await completeTodo(_id, !status);
   };
 
   const handleDeleteTodo = async (_id) => {
@@ -74,7 +78,9 @@ export default function TodoApp({ todos }) {
               role={undefined}
               button
               divider
-              // onClick={handleCompleteTodo(_id, isCompleted)}
+              onClick={() => {
+                handleCompleteTodo(_id, isCompleted);
+              }}
             >
               <ListItemIcon>
                 <Checkbox checked={isCompleted} />
