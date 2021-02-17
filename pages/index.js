@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import dbConnect from '../api/dbConnect';
 import Todo from '../api/models/Todo';
 
@@ -17,10 +18,54 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { addTodo, deleteTodo } from '../api';
 
 export default function TodoApp({ todos }) {
+  const [inputs, setInputs] = useState({
+    task: '',
+  });
+
+  const handleInputs = (event) => {
+    event.persist();
+    setInputs(() => ({
+      [event.target.id]: event.target.value,
+    }));
+  };
+
+  const handleAddTodo = async (event) => {
+    event.preventDefault();
+    await addTodo(inputs);
+    setInputs(() => ({
+      task: '',
+    }));
+  };
+
+  const handleDeleteTodo = async (_id) => {
+    await deleteTodo(_id);
+  };
+
   return (
     <Container maxWidth="sm">
+      <form onSubmit={handleAddTodo}>
+        <TextField
+          id="task"
+          value={inputs.task}
+          label="+ Add todo"
+          margin="normal"
+          fullWidth
+          variant="outlined"
+          onChange={handleInputs}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          disabled={inputs.task ? false : true}
+        >
+          Submit
+        </Button>
+      </form>
       <List>
         {todos.map(({ _id, task, isCompleted }) => {
           return (
@@ -42,10 +87,9 @@ export default function TodoApp({ todos }) {
                 }}
               />
               <ListItemSecondaryAction
-              // onClick={() => {
-              //   setTodoToBeDeleted(_id);
-              //   handleClickOpen();
-              // }}
+                onClick={() => {
+                  handleDeleteTodo(_id);
+                }}
               >
                 <IconButton edge="end">
                   <DeleteForeverRoundedIcon />
