@@ -1,5 +1,6 @@
 const contentType = 'application/json';
 
+// add todo to database
 export async function addTodo(todo) {
   try {
     const res = await fetch('/api', {
