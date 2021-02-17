@@ -23,6 +23,7 @@ export async function addTodo(todo) {
   }
 }
 
+// update todo in database
 export async function completeTodo(_id, status) {
   try {
     const res = await fetch('/api', {
