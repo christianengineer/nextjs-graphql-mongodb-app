@@ -1,5 +1,5 @@
-import dbConnect from '../../api/dbConnect';
-import Todo from '../../api/models/Todo';
+import dbConnect from '../../what/dbConnect';
+import Todo from '../../what/models/Todo';
 
 export default async function handler(req, res) {
   const { method } = req;
