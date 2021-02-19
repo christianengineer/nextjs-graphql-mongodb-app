@@ -11,7 +11,7 @@ const TODOS_QUERY = gql`
   }
 `;
 
-export default function gsp() {
+export default function GraphQL() {
   const {
     data: { todos },
   } = useQuery(TODOS_QUERY);
