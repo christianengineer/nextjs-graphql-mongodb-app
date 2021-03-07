@@ -19,4 +19,17 @@ export const resolvers = {
       return todos;
     },
   },
+  Mutation: {
+    async addTodo(_parent, _args, _context, _info) {
+      await dbConnect();
+
+      console.log('_args', _args);
+      console.log('_args', _args);
+      console.log('_args', _args);
+      console.log('_args', _args);
+      const todo = await Todo.create(_args);
+
+      return todo;
+    },
+  },
 };
