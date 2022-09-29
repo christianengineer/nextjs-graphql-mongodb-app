@@ -1,6 +1,6 @@
 ## Todo List App
 
-Live Demo: https://nextjs-mongoose-mongodb-todo-list.vercel.app/
+Live Demo: 
 
 ### Front End
 
