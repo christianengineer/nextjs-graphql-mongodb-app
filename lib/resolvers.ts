@@ -1,7 +1,7 @@
-import dbConnect from './dbConnect';
-import Todo from './models/Todo';
+import dbConnect from "./dbConnect";
+import Todo from "./models/Todo";
 
-export const resolvers = {
+const resolvers = {
   Query: {
     async todos(_parent, _args, _context, _info) {
       await dbConnect();
@@ -27,3 +27,5 @@ export const resolvers = {
     },
   },
 };
+
+export default resolvers;

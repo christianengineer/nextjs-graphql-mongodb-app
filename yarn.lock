@@ -21,6 +21,24 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
+"@apollo/client@~3.2.5 || ~3.3.0 || ~3.4.0 || ~3.5.0 || ~3.6.0":
+  version "3.6.10"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.6.10.tgz#f12d1f0cc4811d6bfe68b3f48a18e08a757ee301"
+  integrity sha512-zow8+Z7Wz8OeH+8bhIxqPtqqXY87APoUbXlaXD/rgs3O9ijSyHSbUt3E4DnkLNP9q3+/OsRWY+Mx+WxkQQ4oig==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.1.1"
+    "@wry/context" "^0.7.0"
+    "@wry/equality" "^0.5.0"
+    "@wry/trie" "^0.3.0"
+    graphql-tag "^2.12.6"
+    hoist-non-react-statics "^3.3.2"
+    optimism "^0.16.1"
+    prop-types "^15.7.2"
+    symbol-observable "^4.0.0"
+    ts-invariant "^0.10.3"
+    tslib "^2.3.0"
+    zen-observable-ts "^1.2.5"
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"
@@ -76,7 +94,7 @@
     "@graphql-tools/utils" "8.12.0"
     tslib "^2.4.0"
 
-"@graphql-tools/schema@^9.0.0", "@graphql-tools/schema@^9.0.4":
+"@graphql-tools/schema@9.0.4", "@graphql-tools/schema@^9.0.0", "@graphql-tools/schema@^9.0.4":
   version "9.0.4"
   resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-9.0.4.tgz#1a74608b57abf90fae6fd929d25e5482c57bc05d"
   integrity sha512-B/b8ukjs18fq+/s7p97P8L1VMrwapYc3N2KvdG/uNThSazRRn8GsBK0Nr+FH+mVKiUfb4Dno79e3SumZVoHuOQ==
@@ -585,6 +603,16 @@ graphql-tag@^2.12.6:
   integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
   dependencies:
     tslib "^2.1.0"
+
+graphql-tools@^8.3.6:
+  version "8.3.6"
+  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-8.3.6.tgz#37ec7f6e2c5d11def54a18200cdd2dd60d7ec984"
+  integrity sha512-9ADr32CCTMh7YYM6VDErzb9i5Lns7UJAR17f7vxmkXLmuzPwcEMoP69GVU5PcWJcTU7rLHZHVxH+X7AwsgBXQA==
+  dependencies:
+    "@graphql-tools/schema" "9.0.4"
+    tslib "^2.4.0"
+  optionalDependencies:
+    "@apollo/client" "~3.2.5 || ~3.3.0 || ~3.4.0 || ~3.5.0 || ~3.6.0"
 
 graphql@^16.6.0:
   version "16.6.0"
