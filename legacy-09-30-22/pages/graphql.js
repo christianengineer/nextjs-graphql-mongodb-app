@@ -1,3 +1,5 @@
+// Temporary graphql page working
+
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/client';
 import { initializeApollo } from '../apollo/client';
