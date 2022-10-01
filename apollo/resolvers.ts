@@ -1,5 +1,6 @@
 import dbConnect from "../utils/dbConnect";
 import Todo from "../utils/models/Todo";
+import { GraphQLResolveInfo } from "graphql";
 
 export default {
   Query: {
