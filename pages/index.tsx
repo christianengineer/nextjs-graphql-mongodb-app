@@ -4,6 +4,14 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import { initializeApollo } from "../apollo/client";
 
+interface Todo {
+  _id: string;
+  task: string;
+  isComplete: boolean;
+  created: Date;
+  updated: Date;
+}
+
 const TODOS_QUERY = gql`
   query TodoQuery {
     todos {
@@ -57,7 +65,7 @@ export default function GraphQL() {
           <button type="submit">add</button>
         </form>
       </div> */}
-      {todos.map(({ _id, task }) => (
+      {todos.map(({ _id, task }: Todo) => (
         <div key={_id}>todo: {task}</div>
       ))}
     </div>
